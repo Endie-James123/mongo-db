@@ -8,7 +8,7 @@ export class Auto {
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop()                                                                                                                                                                             
   brand: string;
 
   @Prop()
