@@ -50,4 +50,15 @@ export class AutomobileService {
     // 4. Save the updated product in the database
     return await updatedProduct.save();
   }
+
+  //Delete an automobile by name
+  async deleteByName(name: string){
+    const toDelete = await this.authModel.deleteOne({ name: name });
+    if(!toDelete){
+      throw new NotFoundException(`${name} not found`);
+    }return{
+        statusCode: 200,
+        message: `${name} deleted successfully`,
+    }
+  }
 }
