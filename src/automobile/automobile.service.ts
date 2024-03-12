@@ -52,13 +52,11 @@ export class AutomobileService {
   }
 
   //Delete an automobile by name
-  async deleteByName(name: string){
-    const toDelete = await this.authModel.deleteOne({ name: name });
-    if(!toDelete){
+  async deleteByName(name: string) {
+    const deleted = await this.authModel.deleteOne({ name: name });
+    if (deleted.deletedCount === 0) {
       throw new NotFoundException(`${name} not found`);
-    }return{
-        statusCode: 200,
-        message: `${name} deleted successfully`,
     }
+    return { status: 200, message: `${name} deleted successfully` };
   }
 }

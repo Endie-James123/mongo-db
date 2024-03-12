@@ -44,6 +44,8 @@ export class AutomobileController {
   //Route to delete an automobile by name
   @Delete('deleteautomobile/:name')
   async deleteProductByName(@Param('name') name: string) {
-    await this.AutoService.deleteByName(name);
+    return await this.AutoService.deleteByName(name);
   }
+
+  
 }
