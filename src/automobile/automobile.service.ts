@@ -10,8 +10,8 @@ export class AutomobileService {
 
   //Method to add auto
   async addAuto(payload: AutoDto) {
-    const saveAuto = new this.authModel(payload);
-    return await saveAuto.save();
+    const saveAuto = new this.authModel(payload).save();
+    return await saveAuto;
   }
 
   async getAutomobileByName(productName: string) {

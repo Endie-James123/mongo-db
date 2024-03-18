@@ -8,7 +8,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  create(@Body() payload:SignupDto, email:string) {
+  create(@Body() payload:SignupDto) {
     return this.authService.RegisterUser(payload);
   }
 
