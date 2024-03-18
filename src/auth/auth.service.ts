@@ -34,5 +34,15 @@ export class AuthService {
     const access_token = await this.jwtService.signAsync(tokenHolder)
     //returning the access token and a mess
     return(`${access_token} ${findUser.name} is Logged in Successfully`);
+  } 
+
+
+  async getAllUsers(){
+    try {
+      const findAll = await this.SignupModel.find();
+      return findAll;
+    } catch (theError) {
+      throw new NotFoundException('Could not find all users');
+    }
   }
 }

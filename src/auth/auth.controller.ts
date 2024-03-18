@@ -17,4 +17,9 @@ export class AuthController {
   signIn(@Body() payload:loginDto) {
     return this.authService.signIn(payload);
   }
+
+  @Get('getAllUsers')
+  getAllUsers() {
+    return this.authService.getAllUsers();
+  }
 }
