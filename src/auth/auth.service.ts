@@ -5,7 +5,7 @@ import { Signup } from './entities/auth.schema';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login.dto';
-
+ 
 @Injectable()
 export class AuthService {
   constructor(@InjectModel("Signup") private SignupModel: Model<Signup>,
@@ -13,8 +13,15 @@ export class AuthService {
 
   //SIGN-UP(Registering a new user)
   async RegisterUser(payload:SignupDto){
+    const {email} = payload
+    const findEmail = await this.SignupModel.findOne({email})
+    if(findEmail){
+      throw new UnauthorizedException("Email already exists")
+    }
     const Register = new this.SignupModel(payload).save();
-    return Register;
+    console.log(Register);
+    
+    return Register
   }
 
   //Sign In (logging in an already existing user)
@@ -35,8 +42,6 @@ export class AuthService {
     //returning the access token and a mess
     return(`${access_token} ${findUser.name} is Logged in Successfully`);
   } 
-
-
   async getAllUsers(){
     try {
       const findAll = await this.SignupModel.find();

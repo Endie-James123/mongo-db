@@ -12,8 +12,8 @@ export class AuthController {
     return this.authService.RegisterUser(payload);
   }
 
-  @HttpCode(HttpStatus.OK)
-  @Get('login')
+  @HttpCode(HttpStatus.OK) 
+  @Post('login')
   signIn(@Body() payload:loginDto) {
     return this.authService.signIn(payload);
   }
