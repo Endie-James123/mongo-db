@@ -40,7 +40,7 @@ export class AuthService {
     //assigning the token to the user
     const access_token = await this.jwtService.signAsync(tokenHolder)
     //returning the access token and a mess
-    return(`${access_token} ${findUser.name} is Logged in Successfully`);
+    return access_token;
   } 
   async getAllUsers(){
     try {
