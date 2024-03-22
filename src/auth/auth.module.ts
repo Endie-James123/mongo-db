@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { SignupSchema } from './Schemas/auth.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SignupSchema } from './Schemas/auth.schema';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { SignupSchema } from './Schemas/auth.schema';
       inject: [ConfigService],
       useFactory: (ConfigService: ConfigService) => ({
         secret: ConfigService.getOrThrow('AUTH_SECRET'),
-        signOptions: ConfigService.getOrThrow('TOKEN_EXPIRATION'),
+        signOptions: { expiresIn: '30s' },
       }),
     }),
   ],
