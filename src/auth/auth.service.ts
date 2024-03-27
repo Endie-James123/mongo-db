@@ -5,6 +5,7 @@ import { Signup } from './Schemas/auth.schema';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login.dto';
+import * as bcrypt from 'bcrypt';
  
 @Injectable()
 export class AuthService {
@@ -13,13 +14,13 @@ export class AuthService {
 
   //SIGN-UP(Registering a new user)
   async RegisterUser(payload:SignupDto){
-    const {email} = payload
+    const {email, password} = payload
+    const hashedPassword = await bcrypt.hash(password, 10)
     const findEmail = await this.SignupModel.findOne({email})
     if(findEmail){
       throw new UnauthorizedException("Email already exists")
     }
     const Register = new this.SignupModel(payload).save();
-    console.log(Register);
     
     return Register
   }
