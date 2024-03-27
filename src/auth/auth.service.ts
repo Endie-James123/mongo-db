@@ -11,18 +11,20 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(@InjectModel("Signup") private SignupModel: Model<Signup>,
   private jwtService: JwtService) {}
-
-  //SIGN-UP(Registering a new user)
+ 
+  //SIGN-UP(Registering a new user) 
   async RegisterUser(payload:SignupDto){
-    const {email, password} = payload
+    const {password, email, ...rest} = payload
     const hashedPassword = await bcrypt.hash(password, 10)
     const findEmail = await this.SignupModel.findOne({email})
     if(findEmail){
       throw new UnauthorizedException("Email already exists")
     }
-    const Register = new this.SignupModel(payload).save();
-    
+    const Register = new this.SignupModel({password:hashedPassword, email, ...rest});
+    Register.save();
+    delete findEmail.password;
     return Register
+
   }
 
   //Sign In (logging in an already existing user)
