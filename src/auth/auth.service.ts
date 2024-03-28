@@ -13,18 +13,17 @@ export class AuthService {
   private jwtService: JwtService) {}
  
   //SIGN-UP(Registering a new user) 
+  //async: This keyword indicates that the function is asynchronous, meaning it can perform operations that may take some time to complete, such as accessing a database or making HTTP requests.
   async RegisterUser(payload:SignupDto){
-    const {password, email, ...rest} = payload
+    const {password, email, ...rest} = payload//The ...rest syntax gathers any remaining properties into a new object called rest
     const hashedPassword = await bcrypt.hash(password, 10)
     const findEmail = await this.SignupModel.findOne({email})
     if(findEmail){
       throw new UnauthorizedException("Email already exists")
     }
-    const Register = new this.SignupModel({password:hashedPassword, email, ...rest});
-    Register.save();
-    delete findEmail.password;
+    const Register = new this.SignupModel({password:hashedPassword, email, ...rest}).save();
+    // delete findEmail.password;
     return Register
-
   }
 
   //Sign In (logging in an already existing user)
@@ -45,8 +44,7 @@ export class AuthService {
     //returning the access token and a mess
     return {
       message: `${findUser.name} is Logged in successfully`,
-      access_token:access_token,
-
+      access_token:access_token, 
     };
   } 
   async getAllUsers(){
