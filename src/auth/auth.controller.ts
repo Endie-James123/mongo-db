@@ -15,6 +15,7 @@ export class AuthController {
     return this.authService.RegisterUser(payload);
   }
 
+  //route to login an existing user
   @HttpCode(HttpStatus.OK) 
   @Post('login')
   signIn(@Body() payload:loginDto) {
