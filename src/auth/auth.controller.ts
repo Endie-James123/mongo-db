@@ -17,13 +17,14 @@ export class AuthController {
 
   //route to login an existing user
   @HttpCode(HttpStatus.OK) 
-  @Post('login')
+  @Post('login')//its a post request with route 'login'
   signIn(@Body() payload:loginDto) {
     return this.authService.signIn(payload);
   }
 
+  //route to get all users from the database
   @UseGuards(AuthGuard)
-  @Get('getAllUsers')
+  @Get('getAllUsers') 
   getAllUsers() {
     return this.authService.getAllUsers();
   }
