@@ -9,7 +9,8 @@ import { Request } from "express";
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signup')
+  //route to sign up a new user
+  @Post('signup')//its a post request with route 'signup'
   create(@Body() payload:SignupDto) {
     return this.authService.RegisterUser(payload);
   }
