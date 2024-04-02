@@ -21,29 +21,23 @@ export class AuthService {
     if(findEmail){
       throw new UnauthorizedException("Email already exists")
     }
-    const Register = new this.SignupModel({password:hashedPassword, email, ...rest}).save();
-    // delete findEmail.password;
-    return Register
+    const Register = new this.SignupModel({password:hashedPassword, email, ...rest})
+    const Registered = Register.save()
+    return Registered
   }
 
   //Sign In (logging in an already existing user)
   async signIn(payload:loginDto) {
     //refactoring the payload
-    const { email, password} = payload;
+    const { email, password} = payload; 
     //Using the users email to Check if the user exists in the database
     const findUser = await this.SignupModel.findOne({email});
-    //checking if the users password matches the password stored in the database
-    if (findUser?.password !== password) {
-      //error to throw if the password/email does not match the password/email stored in the database
-      throw new UnauthorizedException('Invalid password or email');
-    }
-
     // Checking if the provided password matches the hashed password in the database
     const passwordMatch = await bcrypt.compare(password, findUser.password);
     if (!passwordMatch) {
         // Error to throw if the password does not match the password stored in the database
         throw new UnauthorizedException('Invalid password');
-    }
+    } 
     //creating a variable to hold the found user
     const tokenHolder = {email:findUser.email, userId:findUser._id};
     //assigning the token to the user

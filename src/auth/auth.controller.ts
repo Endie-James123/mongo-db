@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, HttpCode, HttpStatus, UseGuards } from '@n
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { loginDto } from './dto/login.dto';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { Request } from "express";
 
 @Controller('auth')
