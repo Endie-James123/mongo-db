@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class AgeGuard implements CanActivate {
@@ -8,9 +8,8 @@ export class AgeGuard implements CanActivate {
 
     // Check if user's age is less than 18
     if (userAge < 18) {
-      return false; // Block access
+        throw new UnauthorizedException('Access denied: User must be 18 years or older.');
     }
-
     return true; // Allow access
   }
 }

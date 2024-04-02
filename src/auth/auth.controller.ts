@@ -4,6 +4,7 @@ import { SignupDto } from './dto/signup.dto';
 import { loginDto } from './dto/login.dto';
 import { AuthGuard } from './guards/auth.guard';
 import { Request } from "express";
+import { AgeGuard } from './guards/age.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -23,7 +24,7 @@ export class AuthController {
   }
 
   //route to get all users from the database
-  @UseGuards(AuthGuard)
+  @UseGuards(AgeGuard)
   @Get('getAllUsers') //It's a get request to get all users from the database
   getAllUsers() {
     return this.authService.getAllUsers();

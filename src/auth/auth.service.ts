@@ -27,28 +27,40 @@ export class AuthService {
   }
 
   //Sign In (logging in an already existing user)
-  async signIn(payload:loginDto) {
-    //refactoring the payload
-    const { email, password} = payload; 
-    //Using the users email to Check if the user exists in the database
-    const findUser = await this.SignupModel.findOne({email});
+  async signIn(payload: loginDto) {
+    // Refactoring the payload
+    const { email, password } = payload;
+
+    // Using the user's email to check if the user exists in the database
+    const findUser = await this.SignupModel.findOne({ email });
+
+    // Check if user exists
+    if (!findUser) {
+        throw new UnauthorizedException('User not found');
+    }
+
     // Checking if the provided password matches the hashed password in the database
     const passwordMatch = await bcrypt.compare(password, findUser.password);
+
     if (!passwordMatch) {
         // Error to throw if the password does not match the password stored in the database
         throw new UnauthorizedException('Invalid password');
-    } 
-    //creating a variable to hold the found user
-    const tokenHolder = {email:findUser.email, userId:findUser._id};
-    //assigning the token to the user
-    const access_token = await this.jwtService.signAsync(tokenHolder)
-    //returning the access token and a mess
+    }
+
+    // Creating a variable to hold the found user
+    const tokenHolder = { email: findUser.email, userId: findUser._id };
+
+    // Assigning the token to the user
+    const access_token = await this.jwtService.signAsync(tokenHolder);
+
+    // Returning the access token and a message
     return {
-      message: `${findUser.name} is Logged in successfully`,
-      access_token:access_token, 
-    }; 
-  } 
-  async getAllUsers(){
+        message: `${findUser.name} is logged in successfully`,
+        access_token: access_token,
+    };
+}
+
+  async getAllUsers(){ 
     try {
       const findAll = await this.SignupModel.find();
       return findAll;
