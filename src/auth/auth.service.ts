@@ -37,6 +37,13 @@ export class AuthService {
       //error to throw if the password/email does not match the password/email stored in the database
       throw new UnauthorizedException('Invalid password or email');
     }
+
+    // Checking if the provided password matches the hashed password in the database
+    const passwordMatch = await bcrypt.compare(password, findUser.password);
+    if (!passwordMatch) {
+        // Error to throw if the password does not match the password stored in the database
+        throw new UnauthorizedException('Invalid password');
+    }
     //creating a variable to hold the found user
     const tokenHolder = {email:findUser.email, userId:findUser._id};
     //assigning the token to the user
@@ -45,7 +52,7 @@ export class AuthService {
     return {
       message: `${findUser.name} is Logged in successfully`,
       access_token:access_token, 
-    };
+    }; 
   } 
   async getAllUsers(){
     try {
