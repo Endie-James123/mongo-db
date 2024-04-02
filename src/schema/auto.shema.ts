@@ -17,6 +17,6 @@ export class Auto {
   isManual: boolean;
 
   @Prop()
-  price: number;
+  age: number;
 }
 export const AutoSchema = SchemaFactory.createForClass(Auto);
