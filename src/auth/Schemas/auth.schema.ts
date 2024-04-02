@@ -15,6 +15,9 @@ export class Signup {
 
   @Prop()
   email: string;
+
+  @Prop()
+  age: number;
 }
 
 export const SignupSchema = SchemaFactory.createForClass(Signup);

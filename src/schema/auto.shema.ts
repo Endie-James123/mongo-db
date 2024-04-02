@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type AutoDocument = HydratedDocument<Auto>;
-
 @Schema()
 export class Auto {
   @Prop()
@@ -20,5 +19,4 @@ export class Auto {
   @Prop()
   price: number;
 }
-
 export const AutoSchema = SchemaFactory.createForClass(Auto);
