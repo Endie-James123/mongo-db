@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
  
 @Injectable()
 export class AuthService {
+  private readonly blockedUsers: Signup[] = [];
   constructor(@InjectModel("Signup") private SignupModel: Model<Signup>,
   private jwtService: JwtService) {}
  
@@ -19,12 +20,16 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10)
     const findEmail = await this.SignupModel.findOne({email})
     if (age < 18){
-      const isBlocked = true
+      this.blockedUsers.push(payload);
       throw new UnauthorizedException("You must be atleast 18 years old ")
     }
-    if(findEmail ){
+    if(findEmail){
       throw new UnauthorizedException("Email already exists")
     }
+    const findEmailInBlockedUsers = this.blockedUsers.find(user => user.email === email);
+  if (findEmailInBlockedUsers) {
+    throw new UnauthorizedException("Email is blocked");
+  }
     const Register = new this.SignupModel({password:hashedPassword, email, ...rest})
     const Registered = Register.save()
     return Registered
@@ -70,16 +75,6 @@ export class AuthService {
       return findAll;
     } catch (theError) {
       throw new NotFoundException('Could not find all users');
-    }
-  }
-
-  async blockEmail(email: string): Promise<void> {
-    try {
-      // Create a new user record with the provided email address and mark it as blocked
-      await this.SignupModel.create({ email, blockedEmail: true });
-    } catch (error) {
-      // Handle any errors that occur during the process
-      throw new Error(`Failed to block email: ${error.message}`);
     }
   }
 }
