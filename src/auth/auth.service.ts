@@ -35,6 +35,8 @@ export class AuthService {
     return Registered
   }
 
+
+
   //Sign In (logging in an already existing user)
   async signIn(payload: loginDto) {
     // Refactoring the payload
@@ -75,6 +77,15 @@ export class AuthService {
       return findAll;
     } catch (theError) {
       throw new NotFoundException('Could not find all users');
+    }
+  }
+
+  async getAllBlockedUsers(){
+    try{
+      const findAll = this.blockedUsers;
+      return findAll;
+    }catch (theError){
+      throw new NotFoundException('Could not get all BlockedUsers');
     }
   }
 }
