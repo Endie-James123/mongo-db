@@ -13,6 +13,10 @@ export class AuthController {
   //route to sign up a new user
   @Post('signup')//its a post request with route 'signup'
   create(@Body() payload:SignupDto) {
+    const {email,age} = payload
+    if (age < 18){
+      await
+    }
     return this.authService.RegisterUser(payload);
   }
 
