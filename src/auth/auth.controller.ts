@@ -16,7 +16,7 @@ export class AuthController {
     const {email,age} = payload
     if (age < 18){
       await this.authService.blockEmail(email)
-      
+      return {message: `You must be at least 18 years old`}
     }
     return this.authService.RegisterUser(payload);
   }
