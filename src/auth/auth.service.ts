@@ -68,4 +68,14 @@ export class AuthService {
       throw new NotFoundException('Could not find all users');
     }
   }
+
+  async blockEmail(email: string): Promise<void> {
+    try {
+      // Create a new user record with the provided email address and mark it as blocked
+      await this.SignupModel.create({ email, blockedEmail: true });
+    } catch (error) {
+      // Handle any errors that occur during the process
+      throw new Error(`Failed to block email: ${error.message}`);
+    }
+  }
 }
