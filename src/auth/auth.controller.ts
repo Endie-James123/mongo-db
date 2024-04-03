@@ -30,5 +30,10 @@ export class AuthController {
     return this.authService.getAllUsers();
   }
 
-  
+  //route to get all blocked users from the blocked users array
+  @Get('getAllBlockedUsers') //It's a get request to get all blocked users from the blocked users array
+  getAllBlockedUsers() {
+    return this.authService.getAllBlockedUsers();
+  }
+
 }
