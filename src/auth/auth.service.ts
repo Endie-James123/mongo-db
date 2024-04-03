@@ -28,7 +28,7 @@ export class AuthService {
     }
     const findEmailInBlockedUsers = this.blockedUsers.find(user => user.email === email);
   if (findEmailInBlockedUsers) {
-    throw new UnauthorizedException("Email is blocked");
+    throw new UnauthorizedException("This Email is blocked due to underage, trying signing up with another email");
   }
     const Register = new this.SignupModel({password:hashedPassword, email, ...rest})
     const Registered = Register.save()
