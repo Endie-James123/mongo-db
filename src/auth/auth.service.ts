@@ -16,6 +16,7 @@ export class AuthService {
   //SIGN-UP(Registering a new user) 
   //async: This keyword indicates that the function is asynchronous, meaning it can perform operations that may take some time to complete, such as accessing a database or making HTTP requests.
   async RegisterUser(payload:SignupDto){
+    //Destructuring the payload
     const {password, email, age, ...rest} = payload//The ...rest syntax gathers any remaining properties into a new object called rest
     const hashedPassword = await bcrypt.hash(password, 10)
     const findEmail = await this.SignupModel.findOne({email})
@@ -26,7 +27,10 @@ export class AuthService {
       //the error to throw to the user
       throw new UnauthorizedException("You must be atleast 18 years old ")
     }
+    
+    //the code belows checks if the user's email has already been registered in the database
     if(findEmail){
+      //Error to throw if the email already exists in the database
       throw new UnauthorizedException("Email already exists")
     }
     const findEmailInBlockedUsers = this.blockedUsers.find(user => user.email === email);
