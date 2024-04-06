@@ -21,8 +21,9 @@ export class AuthService {
     const findEmail = await this.SignupModel.findOne({email})
     //the code that checks if the user is up to 18yrs
     if (age < 18){
-      //the code below pushes the user to the blocked users array 
+      //the code below pushes the user to the blocked-users array 
       this.blockedUsers.push(payload);
+      //the error to throw to the user
       throw new UnauthorizedException("You must be atleast 18 years old ")
     }
     if(findEmail){
