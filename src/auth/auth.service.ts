@@ -33,11 +33,14 @@ export class AuthService {
       //Error to throw if the email already exists in the database
       throw new UnauthorizedException("Email already exists")
     }
+    //the code below checks if the user's email has been blocked
     const findEmailInBlockedUsers = this.blockedUsers.find(user => user.email === email);
   if (findEmailInBlockedUsers) {
+    //if found in the BlockedUsers array, deny access and throw reason for access denial
     throw new UnauthorizedException("This Email is blocked due to underage, trying signing up with another email");
   }
-    const Register = new this.SignupModel({password:hashedPassword, email, ...rest})
+  //if user has passed all the required permissions and elligible go ahead and register the user 
+    const Register = new this.SignupModel({password:hashedPassword, email, ...rest})//this codee hashes the users password
     const Registered = Register.save()
     return Registered
   }
