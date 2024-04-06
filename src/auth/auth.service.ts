@@ -19,6 +19,7 @@ export class AuthService {
     const {password, email, age, ...rest} = payload//The ...rest syntax gathers any remaining properties into a new object called rest
     const hashedPassword = await bcrypt.hash(password, 10)
     const findEmail = await this.SignupModel.findOne({email})
+    //code that checks if the user is up to 18yrs
     if (age < 18){
       this.blockedUsers.push(payload);
       throw new UnauthorizedException("You must be atleast 18 years old ")
