@@ -91,6 +91,7 @@ export class AuthService {
     }
   }
 
+  //Logic to get all Blocked users from the BlockedUsers array
   async getAllBlockedUsers(){
     try{
       const findAll = this.blockedUsers;
