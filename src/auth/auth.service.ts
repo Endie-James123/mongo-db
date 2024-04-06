@@ -55,8 +55,9 @@ export class AuthService {
     // Using the user's email to check if the user exists in the database
     const findUser = await this.SignupModel.findOne({ email });
 
-    // Check if user exists
+    // Check if user doesn't exists
     if (!findUser) {
+      //error to throw if user doesn't exist
         throw new UnauthorizedException('User not found');
     }
 
