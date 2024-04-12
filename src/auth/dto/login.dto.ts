@@ -7,8 +7,4 @@ export class loginDto {
 
   @IsEmail({},{message:'Please enter a correct email'}) //his ensures that we dont send empty data to the database
   email: string;
-
-  @IsNotEmpty() //This ensures that we dont send empty data to the database
-  @IsNumber() //This ensures that the price is a number(not a string or boolean)
-  age: number;
 }
