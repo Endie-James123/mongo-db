@@ -103,5 +103,9 @@ export class AuthService {
 
   async deleteOneUser(name:string){
     const deleteByName = this.SignupModel.deleteOne({name})
+    if (!deleteByName){
+      throw new NotFoundException(`${name} not found`);
+    } 
+    return { status: 200, message: `${name} was deleted successfully` };
   }
 }
