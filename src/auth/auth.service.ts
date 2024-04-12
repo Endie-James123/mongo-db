@@ -13,7 +13,7 @@ export class AuthService {
   constructor(@InjectModel("Signup") private SignupModel: Model<Signup>,
   private jwtService: JwtService) {}
  
-  //SIGN-UP(Registering a new user) 
+  //SIGN-UP(Registering a new user)  
   //async: This keyword indicates that the function is asynchronous, meaning it can perform operations that may take some time to complete, such as accessing a database or making HTTP requests.
   async RegisterUser(payload:SignupDto){
     //Destructuring the payload
@@ -99,5 +99,9 @@ export class AuthService {
     }catch (theError){
       throw new NotFoundException('Could not get all BlockedUsers');
     }
+  }
+
+  async deleteOneUser(name:string){
+    const deleteByName = this.SignupModel.deleteOne({name})
   }
 }
