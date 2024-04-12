@@ -36,4 +36,9 @@ export class AuthController {
     return this.authService.getAllBlockedUsers();
   }
 
+  @Get('delete/:name')
+  delete(name: string) {
+    return this.authService.deleteOneUser(name);
+  }
+
 }
