@@ -101,11 +101,11 @@ export class AuthService {
     }
   }
 
-  async deleteOneUser(name:string){
-    const deleteByName = this.SignupModel.deleteOne({name})
-    if (!deleteByName){
+  async deleteOneUser(name: string) {
+    const deleted = await this.SignupModel.deleteOne({ name: name });
+    if (deleted.deletedCount === 0) {
       throw new NotFoundException(`${name} not found`);
-    } 
+    }
     return { status: 200, message: `${name} was deleted successfully` };
   }
 }
