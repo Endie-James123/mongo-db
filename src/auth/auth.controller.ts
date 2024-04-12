@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpCode, HttpStatus, UseGuards, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { loginDto } from './dto/login.dto';
@@ -36,7 +36,7 @@ export class AuthController {
     return this.authService.getAllBlockedUsers();
   }
 
-  @Get('delete/:name')
+  @Delete('delete/:name')
   delete(name: string) {
     return this.authService.deleteOneUser(name);
   }
