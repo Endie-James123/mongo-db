@@ -111,7 +111,7 @@ export class AuthService {
 
   async getOne(name:string){
     try{
-      const findOne = await this.SignupModel.findOne({name});
+      const findOne = await this.SignupModel.findOne({name:name});
       return findOne;
     }catch (theError){
       throw new NotFoundException(`${name} not found`);

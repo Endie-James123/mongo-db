@@ -36,6 +36,11 @@ export class AuthController {
     return this.authService.getAllBlockedUsers();
   }
 
+  @Get('getOne/:name')
+  async findName(@Param('name') name: string) {
+    return await this.authService.getOne(name);
+  }
+
   @Delete('deleteUser/:name')
   async deleteProductByName(@Param('name') name: string) {
     return await this.authService.deleteOneUser(name);
