@@ -118,6 +118,8 @@ export class AuthService {
       throw new NotFoundException(`${name} not found`);
     }
 
+
+    //Logic to Update user by name, hashed the new password if changed, if users age less than 18 upon Update throw error
     async UpdateUserByName(name:string, payload: Partial<UpdateDto>){
       const findOne = await this.SignupModel.findOne({name:name});
       if(!findOne){ 
