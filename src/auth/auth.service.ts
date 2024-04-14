@@ -123,7 +123,11 @@ export class AuthService {
         throw new NotFoundException(`${name} not found`);
       } 
       if(payload.password){
-        
+        const hashedPassword = await bcrypt.hash(payload.password, 10)
+        payload.password = hashedPassword
+      }
+      if (payload.age < 18){
+        throw new UnauthorizedException("User must be atleast 18 years old ")
       }
       Object.assign(findOne, payload);
       const updated = await findOne.save();
