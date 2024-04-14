@@ -121,7 +121,11 @@ export class AuthService {
       const findOne = await this.SignupModel.findOne({name:name});
       if(!findOne){
         throw new NotFoundException(`${name} not found`);
-      } Object.assign(findOne, payload);
+      } 
+      if(payload.password){
+        
+      }
+      Object.assign(findOne, payload);
       const updated = await findOne.save();
       return {
         message: 'User updated successfully',
