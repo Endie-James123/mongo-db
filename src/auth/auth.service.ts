@@ -108,4 +108,13 @@ export class AuthService {
     }
     return { status: 200, message: `${name} was deleted successfully` };
   }
+
+  async getOne(name:string){
+    try{
+      const findOne = await this.SignupModel.findOne({name});
+      return findOne;
+    }catch (theError){
+      throw new NotFoundException(`${name} not found`);
+    }
+  }
 }
