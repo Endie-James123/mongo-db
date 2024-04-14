@@ -118,11 +118,14 @@ export class AuthService {
       throw new NotFoundException(`${name} not found`);
     }
 
-    async UpdateUserByName(name:string, payload:UpdateDto){
+    async UpdateUserByName(name:string, payload: Partial<UpdateDto>){
       const findOne = await this.SignupModel.findOne({name:name});
       if(!findOne){ 
         throw new NotFoundException(`${name} not found`);
       } 
+      Object.keys(payload).forEach((key) => {
+        findOne[key] = payload[key];
+      });
       if(payload.password){
         const hashedPassword = await bcrypt.hash(payload.password, 10)
         payload.password = hashedPassword

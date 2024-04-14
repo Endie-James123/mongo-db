@@ -42,7 +42,7 @@ export class AuthController {
     return await this.authService.getOne(name);
   }
   @Patch('UpdateUser/:name')
-  async UpdateUserByName(@Param('name') name: string, @Body() payload:UpdateDto) {
+  async UpdateUserByName(@Param('name') name: string, @Body() payload:Partial<UpdateDto>) {
     return await this.authService.UpdateUserByName(name, payload);
   }
 
