@@ -5,6 +5,7 @@ import { loginDto } from './dto/login.dto';
 import { AuthGuard } from './guards/auth.guard';
 import { Request } from "express";
 import { AgeGuard } from './guards/age.guard';
+import { UpdateDto } from './dto/Update.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -41,7 +42,7 @@ export class AuthController {
     return await this.authService.getOne(name);
   }
   @Patch('UpdateUser/:name')
-  async UpdateUserByName(@Param('name') name: string, @Body() payload:SignupDto) {
+  async UpdateUserByName(@Param('name') name: string, @Body() payload:UpdateDto) {
     return await this.authService.UpdateUserByName(name, payload);
   }
 

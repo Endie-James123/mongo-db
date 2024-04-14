@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
+import { UpdateDto } from './dto/Update.dto';
  
 @Injectable()
 export class AuthService {
@@ -117,9 +118,9 @@ export class AuthService {
       throw new NotFoundException(`${name} not found`);
     }
 
-    async UpdateUserByName(name:string, payload:SignupDto){
+    async UpdateUserByName(name:string, payload:UpdateDto){
       const findOne = await this.SignupModel.findOne({name:name});
-      if(!findOne){
+      if(!findOne){ 
         throw new NotFoundException(`${name} not found`);
       } 
       if(payload.password){
