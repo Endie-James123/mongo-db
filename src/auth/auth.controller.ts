@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, HttpCode, HttpStatus, UseGuards, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpCode, HttpStatus, UseGuards, Delete, Param, Patch } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { loginDto } from './dto/login.dto';
@@ -39,6 +39,10 @@ export class AuthController {
   @Get('getOne/:name')
   async findName(@Param('name') name: string) {
     return await this.authService.getOne(name);
+  }
+  @Patch('UpdateUser/:name')
+  async UpdateUserByName(@Param('name') name: string, @Body() payload:SignupDto) {
+    return await this.authService.UpdateUserByName(name, payload);
   }
 
   @Delete('deleteUser/:name')

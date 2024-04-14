@@ -116,4 +116,16 @@ export class AuthService {
       }
       throw new NotFoundException(`${name} not found`);
     }
+
+    async UpdateUserByName(name:string, payload:SignupDto){
+      const findOne = await this.SignupModel.findOne({name:name});
+      if(!findOne){
+        throw new NotFoundException(`${name} not found`);
+      } Object.assign(findOne, payload);
+      const updated = await findOne.save();
+      return {
+        message: 'User updated successfully',
+        NewData: updated,
+      }
   }
+}
