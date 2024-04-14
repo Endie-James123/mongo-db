@@ -110,11 +110,10 @@ export class AuthService {
   }
 
   async getOne(name:string){
-    try{
       const findOne = await this.SignupModel.findOne({name:name});
+      if(findOne){
       return findOne;
-    }catch (theError){
+      }
       throw new NotFoundException(`${name} not found`);
     }
   }
-}
