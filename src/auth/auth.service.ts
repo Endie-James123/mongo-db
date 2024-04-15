@@ -122,6 +122,7 @@ export class AuthService {
     return { status: 200, message: `${name} was deleted successfully` };
   }
 
+  //Method to get One user
   async getOne(name: string) {
     const findOne = await this.SignupModel.findOne({ name: name });
     if (findOne) {
