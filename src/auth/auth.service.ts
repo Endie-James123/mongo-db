@@ -158,10 +158,15 @@ export class AuthService {
       const hashedPassword = await bcrypt.hash(payload.password, 10);
       payload.password = hashedPassword;
     }
+    //If User updates his age, and its not up to 18....
     if (payload.age < 18) {
+      //Throw UnauthorizedException
       throw new UnauthorizedException('User must be atleast 18 years old ');
-    }
+    }//else...... Continue with the rest of the logic
+
+    //code below merges the updated payload with the existing user data in findOne
     Object.assign(findOne, payload);
+    //code below saves the updated user data in the database
     const updated = await findOne.save();
     return {
       message: 'User updated successfully',
