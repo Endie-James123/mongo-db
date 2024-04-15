@@ -51,11 +51,8 @@ export class AuthService {
       );
     }
     //if user has passed all the required permissions and elligible go ahead and register the user
-    const Register = new this.SignupModel({
-      password: hashedPassword,
-      email,
-      ...rest,
-    }); //this codee hashes the users password
+    const Register = new this.SignupModel({ password: hashedPassword, email, ...rest,
+    }); 
     const Registered = Register.save();
     return Registered;
   }
@@ -77,9 +74,10 @@ export class AuthService {
     // Checking if the provided password matches the hashed password in the database
     const passwordMatch = await bcrypt.compare(password, findUser.password);
 
+    //If Password doesn't match...
     if (!passwordMatch) {
       // Error to throw if the password does not match the password stored in the database
-      throw new UnauthorizedException('Invalid password');
+      throw new UnauthorizedException('Incorrect password');
     }
 
     // Creating a variable to hold the found user
@@ -88,7 +86,7 @@ export class AuthService {
     // Assigning the token to the user
     const access_token = await this.jwtService.signAsync(tokenHolder);
 
-    // Returning the access token and a message
+    // Returning the access token and a login successful message
     return {
       message: `${findUser.name} is logged in successfully`,
       access_token: access_token,
