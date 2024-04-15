@@ -142,13 +142,19 @@ export class AuthService {
   async UpdateUserByName(name: string, payload: Partial<UpdateDto>){//The Partial type allows some fields of UpdateDto to be optional. 
     //Code below uses the users name to search for the user in the database
     const findOne = await this.SignupModel.findOne({ name: name });
+    //If the user is NOT found....
     if (!findOne) {
+      //Throw NotFoundException
       throw new NotFoundException(`${name} not found`);
-    }
+    }//else...... continue with the rest of the logic
+
+    //Code below updates the user's data with the new values provided in the payload.
     Object.keys(payload).forEach((key) =>  {
       findOne[key] = payload[key];
     });
+    //If user updates his password....
     if (payload.password) {
+      //Code below hashes the new password
       const hashedPassword = await bcrypt.hash(payload.password, 10);
       payload.password = hashedPassword;
     }
