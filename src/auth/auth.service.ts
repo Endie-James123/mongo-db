@@ -95,6 +95,7 @@ export class AuthService {
     };
   }
 
+  //Logic to get all Users
   async getAllUsers() {
     try {
       const findAll = await this.SignupModel.find();
@@ -141,7 +142,7 @@ export class AuthService {
     if (!findOne) {
       throw new NotFoundException(`${name} not found`);
     }
-    Object.keys(payload).forEach((key) => {
+    Object.keys(payload).forEach((key) =>  {
       findOne[key] = payload[key];
     });
     if (payload.password) {
