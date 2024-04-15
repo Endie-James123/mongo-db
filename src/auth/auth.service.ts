@@ -124,10 +124,14 @@ export class AuthService {
 
   //Method to get One user
   async getOne(name: string) {
+    //code below looks for the user in the database
     const findOne = await this.SignupModel.findOne({ name: name });
+    //If the user is found
     if (findOne) {
+      //Returns the user
       return findOne;
     }
+    //If the user is not found throw NotFoundException
     throw new NotFoundException(`${name} not found`);
   }
 
