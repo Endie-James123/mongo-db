@@ -168,6 +168,7 @@ export class AuthService {
     Object.assign(findOne, payload);
     //code below saves the updated user data in the database
     const updated = await findOne.save();
+    //Code below returns successful message and the users new data
     return {
       message: 'User updated successfully',
       NewData: updated,
