@@ -140,6 +140,7 @@ export class AuthService {
 
   //Logic to Update user by name, hashed the new password if changed, if users age less than 18 upon Update throw error
   async UpdateUserByName(name: string, payload: Partial<UpdateDto>){//The Partial type allows some fields of UpdateDto to be optional. 
+    //Code below uses the users name to search for the user in the database
     const findOne = await this.SignupModel.findOne({ name: name });
     if (!findOne) {
       throw new NotFoundException(`${name} not found`);
