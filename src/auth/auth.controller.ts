@@ -25,8 +25,7 @@ export class AuthController {
   }
 
   //route to get all users from the database
-  @UseGuards()
-  @Get('getAllUsers') //It's a get request to get all users from the database
+  @Get('GetAllUsers')
   getAllUsers() {
     return this.authService.getAllUsers();
   }

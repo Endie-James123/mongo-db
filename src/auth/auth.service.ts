@@ -19,7 +19,6 @@ export class AuthService {
     @InjectModel('Signup') private SignupModel: Model<Signup>,
     private jwtService: JwtService,
   ) {}
-
   //SIGN-UP(Registering a new user)
   //async: This keyword indicates that the function is asynchronous, meaning it can perform operations that may take some time to complete, such as accessing a database or making HTTP requests.
   async RegisterUser(payload: SignupDto) {
@@ -38,7 +37,7 @@ export class AuthService {
     //the code belows checks if the user's email has already been registered in the database
     if (findEmail) {
       //Error to throw if the email already exists in the database
-      throw new UnauthorizedException('Email already exists');
+      throw new UnauthorizedException('Email already exists in the database');
     }
     //the code below checks if the user's email has been blocked
     const findEmailInBlockedUsers = this.blockedUsers.find(
@@ -68,7 +67,7 @@ export class AuthService {
     // Check if user doesn't exists
     if (!findUser) {
       //error to throw if user doesn't exist
-      throw new UnauthorizedException('User not found');
+      throw new NotFoundException('User not found');
     }
 
     // Checking if the provided password matches the hashed password in the database
@@ -94,14 +93,7 @@ export class AuthService {
   }
 
   //Logic to get all Users
-  async getAllUsers() {
-    try {
-      const findAll = await this.SignupModel.find();
-      return findAll;
-    } catch (theError) {
-      throw new NotFoundException('Could not find all users');
-    }
-  }
+
 
   //Logic to get all Blocked users from the BlockedUsers array
   async getAllBlockedUsers() {
@@ -168,8 +160,18 @@ export class AuthService {
     const updated = await findOne.save();
     //Code below returns successful message and the users new data
     return {
-      message: 'User updated successfully',
+      message: `${findOne.name} updated successfully`,
       NewData: updated,
     };
   }
+
+
+  async getAllUsers(){
+    const users = await this.SignupModel.find()
+    if(users){
+      return users
+    }
+    throw new NotFoundException(`Could not find all users`)
+  }
 }
+

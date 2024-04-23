@@ -10,8 +10,8 @@ export class SignupDto {
   @IsNotEmpty() //This ensures that we dont send empty data to the database
   password: any;
 
-  @IsEmail({},{message:'Please enter a correct email'}) //his ensures that we dont send empty data to the database
-  email: string;
+  @IsEmail({},{message:'Please enter a correct email address'}) //his ensures that we dont send empty data to the database
+  email: any;
 
   @IsNotEmpty() //This ensures that we dont send empty data to the database
   @IsNumber() //This ensures that the price is a number(not a string or boolean)

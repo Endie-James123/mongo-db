@@ -4,15 +4,15 @@ export class UpdateDto {
 
   @MinLength(3, { message: 'Name must not be less than 3 characters' }) //this ensures that mininum characters to be sent to the database is not less than 3
   @MaxLength(15, { message: 'Name must not be more than 15 characters' }) //this ensures that maximum characters to be sent to the database is not more than 15
-  name?: string;
+  name: string;
 
   @IsNotEmpty() //This ensures that we dont send empty data to the database
-  password?: any;
+  password: any;
 
   @IsEmail({},{message:'Please enter a correct email'}) //his ensures that we dont send empty data to the database
-  email?: string;
+  email: string;
 
   @IsNotEmpty() //This ensures that we dont send empty data to the database
   @IsNumber() //This ensures that the price is a number(not a string or boolean)
-  age?: number;
+  age: number;
 }
